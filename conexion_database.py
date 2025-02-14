@@ -26,8 +26,7 @@ try:
         cursor.execute(query, (fecha_inicio,)) 
         resultados = cursor.fetchall()  
 
-        for row in resultados:
-            print(row)
+        print(resultados)
 
 except Error as err:
     print(f"Error conectando con MySQL: {err}")
