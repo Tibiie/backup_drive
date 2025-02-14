@@ -1,25 +1,28 @@
-import mysql.connector
+import mysql.connector 
+from mysql.connector import Error
 
-DB_CONFIG = {
-    "host": "192.168.1.171",  
-    "port": 3306, 
-    "user": "admin",  
-    "password": "admin", 
-    "database": "consignaciones-microservice", 
+db_config = {
+    'host': '192.168.1.171',
+    'database': 'cartera-temporal',
+    'user': 'admin',
+    'password': 'admin',
+    'connection_timeout': 20
 }
 
 try:
-    conn = mysql.connector.connect(**DB_CONFIG)
-    cursor = conn.cursor()
+    print("Intentando conectar a MySQL...")
+    conn = mysql.connector.connect(**db_config)
+    print("Intentando conectar a MySQL...")
+    if conn.is_connected():
+        print("✅ Conexión exitosa con MySQL")
+    else:
+        raise Exception("❌ No se pudo conectar a MySQL.")  # 🔹 Forzar error si no se conecta
 
-    cursor.execute("SHOW TABLES;")
-    tables = cursor.fetchall()
+except Error as err:
+    print(f"🚨 Error conectando con MySQL: {err}")
+    raise  # 🔹 Forzar que Python muestre la excepción completa
 
-    print("Conexion exitosa")
-    for table in tables:
-        print(table[0])
-
-    cursor.close()
-    conn.close()
-except mysql.connector.Error as err:
-    print(f"Error al conectar con MySQL: {err}")
+finally:
+    if 'conn' in locals() and conn.is_connected():
+        conn.close()
+        print("🔌 Conexión cerrada correctamente")
