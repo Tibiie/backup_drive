@@ -16,13 +16,13 @@ try:
     if conn.is_connected():
         print("✅ Conexión exitosa con MySQL")
     else:
-        raise Exception("❌ No se pudo conectar a MySQL.")  # 🔹 Forzar error si no se conecta
+        raise Exception("❌ No se pudo conectar a MySQL.") 
 
 except Error as err:
     print(f"🚨 Error conectando con MySQL: {err}")
-    raise  # 🔹 Forzar que Python muestre la excepción completa
+    raise  
 
 finally:
     if 'conn' in locals() and conn.is_connected():
         conn.close()
-        print("🔌 Conexión cerrada correctamente")
+        print("Conexión cerrada correctamente")
