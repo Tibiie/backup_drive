@@ -17,7 +17,7 @@ def obtener_archivos_en_zip(zip_path):
 def agregar_archivos_a_zip(archivos, zip_path):
     """Agrega archivos al ZIP sin sobrescribir los existentes."""
     
-    archivos_en_zip = obtener_archivos_en_zip(zip_path)  # Archivos ya en el ZIP
+    archivos_en_zip = obtener_archivos_en_zip(zip_path)
     archivos_locales = {os.path.basename(file): file for file in archivos}
     
     archivos_nuevos = {
@@ -46,7 +46,7 @@ def agregar_archivos_nuevos_a_zip(archivos, zip_path):
 
     if not archivos_drive:
         print("No se encontraron archivos en Google Drive. Comprimir todos los archivos locales.")
-        return agregar_archivos_a_zip(archivos, zip_path)  # Comprime todos los archivos locales.
+        return agregar_archivos_a_zip(archivos, zip_path) 
     
     archivos_drive_nombres = {archivo['name'] for archivo in archivos_drive}
     archivos_locales = {os.path.basename(file): file for file in archivos}
