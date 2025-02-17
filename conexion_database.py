@@ -44,3 +44,7 @@ def obtener_archivos_desde_bd():
         if 'conn' in locals() and conn.is_connected():
             conn.close()
             print("Conexión cerrada correctamente")
+
+if __name__ == "__main__":
+    archivos = obtener_archivos_desde_bd()
+    print(archivos)

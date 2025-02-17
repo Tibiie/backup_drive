@@ -1,17 +1,20 @@
+from conexion_drive import get_drive_service
+from googleapiclient.http import MediaFileUpload
 import os
-import zipfile
 
-ZIP_FILE_PATH = "backup.zip"
+def subir_archivo_a_drive(zip_path):
+    """Sube un archivo ZIP a Google Drive."""
+    drive_service = get_drive_service()
 
-def comprimir_archivos(archivos, zip_path):
-    """Comprime los archivos en un ZIP."""
-    with zipfile.ZipFile(zip_path, 'w') as zipf:
-        for archivo in archivos:
-            if os.path.exists(archivo):  
-                arcname = os.path.basename(archivo)  
-                zipf.write(archivo, arcname)
-                print(f"Archivo agregado: {arcname}")
-            else:
-                print(f"⚠️ Advertencia: Archivo no encontrado -> {archivo}")
+    file_metadata = {
+        'name': os.path.basename(zip_path),
+        'parents': ['root'],  # Cambia 'root' por el ID de la carpeta si quieres subirlo a una carpeta específica
+    }
 
-    print(f"✅ Backup comprimido en {zip_path}")
+    media = MediaFileUpload(zip_path, mimetype='application/zip')
+    file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+
+    print(f"✅ Archivo subido a Google Drive con ID: {file['id']}")
+
+if __name__ == "__main__":
+    subir_archivo_a_drive("backup.zip")

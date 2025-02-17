@@ -11,15 +11,15 @@ def comprimir_archivos(archivos, zip_path):
             if os.path.exists(archivo):  
                 arcname = os.path.basename(archivo)  
                 zipf.write(archivo, arcname)
-                print(f"✅ Archivo agregado: {arcname}")
+                print(f"Archivo agregado: {arcname}")
             else:
-                print(f"⚠️ Archivo no encontrado: {archivo}")
+                print(f"⚠️ Advertencia: Archivo no encontrado -> {archivo}")
 
-    print(f"🎯 Backup comprimido en {zip_path}")
+    print(f"✅ Backup comprimido en {zip_path}")
 
 if __name__ == "__main__":
     archivos = obtener_archivos_desde_bd()
     if archivos:
         comprimir_archivos(archivos, ZIP_FILE_PATH)
     else:
-        print("❌ No hay archivos para comprimir")
+        print("No hay archivos para comprimir")
