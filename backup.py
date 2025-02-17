@@ -26,6 +26,7 @@ def agregar_archivos_nuevos_a_zip(archivos, zip_path):
         # Si no hay archivos en Google Drive, siempre comprimir y subir todos los archivos locales
         print("No se encontraron archivos en Google Drive. Comprimir todos los archivos locales.")
         comprimir_archivos(archivos, zip_path)
+        return True  # Indicamos que se comprimieron y se debe proceder a subir.
     else:
         archivos_drive_nombres = {archivo['name']: archivo for archivo in archivos_drive}
         archivos_locales = {os.path.basename(file): file for file in archivos}
@@ -41,5 +42,7 @@ def agregar_archivos_nuevos_a_zip(archivos, zip_path):
         if archivos_nuevos:
             print(f"Archivos nuevos a agregar: {archivos_nuevos}")
             comprimir_archivos([archivos_locales[file] for file in archivos_nuevos], zip_path)
+            return True  # Retorna True si se comprimieron nuevos archivos
         else:
             print("No hay archivos nuevos para agregar.")
+            return False  # Retorna False si no hay archivos nuevos.
