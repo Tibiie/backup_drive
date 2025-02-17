@@ -4,7 +4,7 @@ from conexion_database import obtener_archivos_desde_bd
 from conexion_drive import obtener_archivos_en_drive
 
 ZIP_FILE_PATH = "backup.zip"
-DRIVE_FOLDER_ID = '1qNiS0eHrAp-9b5SWqexh0HErxAEL5Gmq'  
+DRIVE_FOLDER_ID = '1qNiS0eHrAp-9b5SWqexh0HErxAEL5Gmq'
 
 def comprimir_archivos(archivos, zip_path):
     """Comprime los archivos en un ZIP y los sube a Google Drive."""
@@ -21,9 +21,11 @@ def comprimir_archivos(archivos, zip_path):
 def agregar_archivos_nuevos_a_zip(archivos, zip_path):
     """Verifica si hay archivos nuevos y los agrega al ZIP sin descomprimirlo."""
     archivos_drive = obtener_archivos_en_drive(DRIVE_FOLDER_ID)
+    archivos_drive_nombres = {item['name'] for item in archivos_drive}  # Conjunto de nombres de archivos en Drive
+
     archivos_locales = {os.path.basename(file): file for file in archivos}
-    
-    archivos_nuevos = [file for file in archivos_locales if file not in archivos_drive]
+
+    archivos_nuevos = [file for file in archivos_locales if os.path.basename(file) not in archivos_drive_nombres]
     
     if archivos_nuevos:
         print(f"Archivos nuevos a agregar: {archivos_nuevos}")

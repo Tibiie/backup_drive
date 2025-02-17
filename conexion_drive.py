@@ -9,11 +9,11 @@ def get_drive_service():
     creds = service_account.Credentials.from_service_account_info(credentials_dict)
     return build("drive", "v3", credentials=creds)
 
-def obtener_archivos_en_drive():
-    """Obtiene los archivos almacenados en Google Drive."""
+def obtener_archivos_en_drive(folder_id):
+    """Obtiene los archivos almacenados en Google Drive en una carpeta específica."""
     try:
         service = get_drive_service()
-        results = service.files().list(pageSize=10, fields="nextPageToken, files(id, name)").execute()
+        results = service.files().list(q=f"'{folder_id}' in parents", pageSize=1000, fields="nextPageToken, files(id, name)").execute()
         items = results.get('files', [])
 
         if not items:
