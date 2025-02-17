@@ -22,8 +22,8 @@ def agregar_archivos_nuevos_a_zip(archivos, zip_path):
     """Verifica si hay archivos nuevos y los agrega al ZIP sin descomprimirlo."""
     archivos_drive = obtener_archivos_en_drive(DRIVE_FOLDER_ID)
     
-    # Si no hay archivos en Google Drive, comprime todos los archivos locales
     if not archivos_drive:
+        # Si no hay archivos en Google Drive, siempre comprimir y subir todos los archivos locales
         print("No se encontraron archivos en Google Drive. Comprimir todos los archivos locales.")
         comprimir_archivos(archivos, zip_path)
     else:
