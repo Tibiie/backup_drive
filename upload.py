@@ -14,7 +14,7 @@ def subir_archivo_a_drive(zip_path):
 
     file_metadata = {
         'name': os.path.basename(zip_path),
-        'parents': ['1FSw1whLKX4ZAAjFsmmz644ZjsmqAb3E8'],  # Cambia al ID de la carpeta destino
+        'parents': ['1qNiS0eHrAp-9b5SWqexh0HErxAEL5Gmq'],  # Cambia al ID de la carpeta destino
     }
 
     media = MediaFileUpload(zip_path, mimetype='application/zip', resumable=True)  # Subida resumible
