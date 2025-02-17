@@ -6,14 +6,24 @@ from conexion_vault import get_credentials_from_vault
 def get_drive_service():
     """Autenticación en Google Drive usando credenciales obtenidas de Vault"""
     credentials_dict = get_credentials_from_vault() 
-
     creds = service_account.Credentials.from_service_account_info(credentials_dict)
-
     return build("drive", "v3", credentials=creds)
 
-if __name__ == "__main__":
+def obtener_archivos_en_drive():
+    """Obtiene los archivos almacenados en Google Drive."""
     try:
-        drive_service = get_drive_service()
-        print("Autenticacion con Google Drive exitosa")
-    except Exception as e:
-        print(f"Error en la autenticacion con Google Drive: {e}")
+        service = get_drive_service()
+        results = service.files().list(pageSize=10, fields="nextPageToken, files(id, name)").execute()
+        items = results.get('files', [])
+
+        if not items:
+            print("No se encontraron archivos en Drive.")
+        else:
+            print("Archivos en Google Drive:")
+            for item in items:
+                print(f"{item['name']} (ID: {item['id']})")
+        return items
+
+    except Exception as error:
+        print(f"Error al obtener archivos desde Google Drive: {error}")
+        return []
