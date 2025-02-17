@@ -1,7 +1,8 @@
 import mysql.connector
 from mysql.connector import Error
-from datetime import datetime
+import os
 
+# Configuración de la base de datos
 db_config = {
     'host': '192.168.1.171',
     'database': 'consignaciones-microservice',
@@ -9,28 +10,37 @@ db_config = {
     'password': 'admin',
 }
 
-try:
-    conn = mysql.connector.connect(**db_config)
-    if conn.is_connected():
-        print("Conexión exitosa con MySQL")
+# Prefijo de la ruta base
+BASE_PATH = "/root/uploadsApps/consignaciones"
 
-        cursor = conn.cursor(dictionary=True)  
+def obtener_archivos_desde_bd():
+    """Consulta la base de datos y obtiene las rutas completas de los archivos de comprobantes."""
+    try:
+        conn = mysql.connector.connect(**db_config)
+        if conn.is_connected():
+            print("Conexión exitosa con MySQL")
 
-        query = """
-        SELECT * FROM comprobantes 
-        WHERE fecha_creacion BETWEEN %s AND CURDATE();
-        """
-        fecha_inicio = '2024-02-14' 
+            cursor = conn.cursor(dictionary=True)  
 
-        cursor.execute(query, (fecha_inicio,)) 
-        resultados = cursor.fetchall()  
+            query = """
+            SELECT ruta_archivo FROM comprobantes 
+            WHERE fecha_creacion BETWEEN %s AND CURDATE();
+            """
+            fecha_inicio = '2024-02-14'  
 
-        print(resultados)
+            cursor.execute(query, (fecha_inicio,))  
+            resultados = cursor.fetchall()  
 
-except Error as err:
-    print(f"Error conectando con MySQL: {err}")
-    
-finally:
-    if 'conn' in locals() and conn.is_connected():
-        conn.close()
-        print("Conexión cerrada correctamente")
+            archivos = [os.path.join(BASE_PATH, row['ruta_archivo'].lstrip('/')) for row in resultados if row['ruta_archivo']]
+
+            print(f"Se encontraron {len(archivos)} archivos para comprimir.")
+            return archivos
+
+    except Error as err:
+        print(f"Error conectando con MySQL: {err}")
+        return []
+
+    finally:
+        if 'conn' in locals() and conn.is_connected():
+            conn.close()
+            print("Conexión cerrada correctamente")
