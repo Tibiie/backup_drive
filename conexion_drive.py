@@ -5,7 +5,7 @@ from conexion_vault import get_credentials_from_vault
 from googleapiclient.http import MediaFileUpload
 import os
 
-ZIP_FILE_PATH = "comprobantes_backup.zip"
+ZIP_FILE_PATH = "backup.zip"
 
 def get_drive_service():
     """Autenticación en Google Drive usando credenciales obtenidas de Vault."""
