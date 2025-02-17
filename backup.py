@@ -9,10 +9,10 @@ DRIVE_FOLDER_ID = '1qNiS0eHrAp-9b5SWqexh0HErxAEL5Gmq'
 def obtener_archivos_en_zip(zip_path):
     """Obtiene la lista de archivos dentro del ZIP existente."""
     if not os.path.exists(zip_path):
-        return set()  # Si el archivo ZIP no existe, retornamos un conjunto vacío.
+        return set() 
 
     with zipfile.ZipFile(zip_path, 'r') as zipf:
-        return set(zipf.namelist())  # Devuelve la lista de archivos dentro del ZIP.
+        return set(zipf.namelist())  
 
 def agregar_archivos_a_zip(archivos, zip_path):
     """Agrega archivos al ZIP sin sobrescribir los existentes."""
@@ -30,7 +30,7 @@ def agregar_archivos_a_zip(archivos, zip_path):
 
     print(f"Agregando archivos nuevos: {list(archivos_nuevos.keys())}")
 
-    with zipfile.ZipFile(zip_path, 'a') as zipf:  # 'a' para agregar sin sobrescribir
+    with zipfile.ZipFile(zip_path, 'a') as zipf: 
         for nombre, ruta in archivos_nuevos.items():
             if os.path.exists(ruta):
                 zipf.write(ruta, nombre)

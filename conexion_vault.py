@@ -1,7 +1,6 @@
 import requests
 import json
 
-
 VAULT_URL = "http://192.168.1.171:8200/v1/kv/data/credential"
 VAULT_TOKEN = "hvs.DrjomI38eiLeY3cWcsm0AVcF"
 

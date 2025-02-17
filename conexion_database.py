@@ -3,7 +3,6 @@ from mysql.connector import Error
 import os
 from datetime import datetime
 
-# Tu configuración de base de datos
 db_config = {
     'host': '192.168.1.171',
     'database': 'consignaciones-microservice',
