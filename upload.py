@@ -8,7 +8,7 @@ def subir_archivo_a_drive(zip_path):
 
     file_metadata = {
         'name': os.path.basename(zip_path),
-        'parents': ['root'],  # Cambia 'root' por el ID de la carpeta si quieres subirlo a una carpeta específica
+        'parents': ['root'],  
     }
 
     media = MediaFileUpload(zip_path, mimetype='application/zip')

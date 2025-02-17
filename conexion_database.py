@@ -25,7 +25,7 @@ def obtener_archivos_desde_bd():
             SELECT ruta_archivo FROM comprobantes 
             WHERE fecha_creacion BETWEEN %s AND CURDATE();
             """
-            fecha_inicio = '2024-12-01'  
+            fecha_inicio = '2025-01-01'  
 
             cursor.execute(query, (fecha_inicio,))  
             resultados = cursor.fetchall()  
