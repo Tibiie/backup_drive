@@ -1,6 +1,8 @@
 import mysql.connector
 from mysql.connector import Error
 import os
+from datetime import datetime
+
 
 # Configuración de la base de datos
 db_config = {
@@ -19,16 +21,23 @@ def obtener_archivos_desde_bd():
         if conn.is_connected():
             print("Conexión exitosa con MySQL")
 
-            cursor = conn.cursor(dictionary=True)  
+
+            fecha_actual = datetime.now()
+            fecha_inicio = fecha_actual.replace(month=1, day=1)
+            fecha_inicio_formateada = fecha_inicio.strftime('%Y-%m-%d')
+            fecha_fin = fecha_actual.strftime('%Y-%m-%d')
+            print(f"Fecha de inicio: {fecha_inicio_formateada}")
+            print(f"Fecha de fin: {fecha_fin}")
+
+            cursor = conn.cursor(dictionary=True)
 
             query = """
             SELECT ruta_archivo FROM comprobantes 
-            WHERE fecha_creacion BETWEEN %s AND CURDATE();
+            WHERE fecha_creacion BETWEEN %s AND %s;
             """
-            fecha_inicio = '2024-02-17'  
 
-            cursor.execute(query, (fecha_inicio,))  
-            resultados = cursor.fetchall()  
+            cursor.execute(query, (fecha_inicio_formateada, fecha_fin))
+            resultados = cursor.fetchall()
 
             archivos = [os.path.join(BASE_PATH, row['ruta_archivo'].lstrip('/')) for row in resultados if row['ruta_archivo']]
 
