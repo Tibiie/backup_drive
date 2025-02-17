@@ -3,8 +3,7 @@ from mysql.connector import Error
 import os
 from datetime import datetime
 
-
-# Configuración de la base de datos
+# Tu configuración de base de datos
 db_config = {
     'host': '192.168.1.171',
     'database': 'consignaciones-microservice',
@@ -20,7 +19,6 @@ def obtener_archivos_desde_bd():
         conn = mysql.connector.connect(**db_config)
         if conn.is_connected():
             print("Conexión exitosa con MySQL")
-
 
             fecha_actual = datetime.now()
             fecha_inicio = fecha_actual.replace(month=1, day=1)
@@ -52,7 +50,3 @@ def obtener_archivos_desde_bd():
         if 'conn' in locals() and conn.is_connected():
             conn.close()
             print("Conexión cerrada correctamente")
-
-if __name__ == "__main__":
-    archivos = obtener_archivos_desde_bd()
-    print(archivos)
