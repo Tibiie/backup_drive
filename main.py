@@ -5,8 +5,8 @@ from conexion_database import obtener_archivos_desde_bd
 def main():
     archivos = obtener_archivos_desde_bd()
     if archivos:
-        # Llamamos a la función para ver si necesitamos comprimir y subir los archivos
         if agregar_archivos_nuevos_a_zip(archivos, "backup.zip"):
+            print("Archivos nuevos encontrados, subiendo el backup.")
             subir_archivo_a_drive("backup.zip")
         else:
             print("No hay archivos nuevos, no se crea ni sube el backup.")
