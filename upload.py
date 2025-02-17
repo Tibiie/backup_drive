@@ -14,7 +14,7 @@ def subir_archivo_a_drive(zip_path):
     media = MediaFileUpload(zip_path, mimetype='application/zip')
     file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
 
-    print(f"✅ Archivo subido a Google Drive con ID: {file['id']}")
+    print(f"Archivo subido a Google Drive con ID: {file['id']}")
 
 if __name__ == "__main__":
     subir_archivo_a_drive("backup.zip")

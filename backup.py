@@ -13,9 +13,9 @@ def comprimir_archivos(archivos, zip_path):
                 zipf.write(archivo, arcname)
                 print(f"Archivo agregado: {arcname}")
             else:
-                print(f"⚠️ Advertencia: Archivo no encontrado -> {archivo}")
+                print(f"Advertencia: Archivo no encontrado -> {archivo}")
 
-    print(f"✅ Backup comprimido en {zip_path}")
+    print(f"Backup comprimido en {zip_path}")
 
 if __name__ == "__main__":
     archivos = obtener_archivos_desde_bd()

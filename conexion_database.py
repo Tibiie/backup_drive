@@ -10,7 +10,6 @@ db_config = {
     'password': 'admin',
 }
 
-# Prefijo de la ruta base
 BASE_PATH = "/root/uploadsApps/consignaciones"
 
 def obtener_archivos_desde_bd():
@@ -26,7 +25,7 @@ def obtener_archivos_desde_bd():
             SELECT ruta_archivo FROM comprobantes 
             WHERE fecha_creacion BETWEEN %s AND CURDATE();
             """
-            fecha_inicio = '2024-02-14'  
+            fecha_inicio = '2024-12-01'  
 
             cursor.execute(query, (fecha_inicio,))  
             resultados = cursor.fetchall()  
